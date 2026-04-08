@@ -1,0 +1,218 @@
+.local-dashboard-v3 {
+    padding: 1rem;
+}
+
+/* Cards */
+.dashboard-card {
+    background: var(--card-bg, #fff);
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transition: 0.2s ease;
+    height: 100%;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    font-size: 0.85rem;
+    color: var(--text-muted, #6c757d);
+}
+
+.dashboard-card h2 {
+    margin: 0;
+    font-weight: 700;
+}
+
+/* Iconos */
+.card-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+}
+
+/* Panels */
+.dashboard-panel {
+    background: var(--card-bg, #fff);
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    height: 100%;
+}
+
+.panel-header h5 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.panel-body {
+    min-height: 320px;
+}
+
+/* Botones */
+.dashboard-panel .btn {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+/* Sidebar estilo Moodle */
+.local-dashboard-sidebar .nav-link {
+    color: #495057;
+    border-radius: 6px;
+}
+
+.local-dashboard-sidebar .nav-link:hover {
+    background-color: #f8f9fa;
+}
+
+.local-dashboard-sidebar .nav-link.active {
+    background-color: #e9ecef;
+    color: #000;
+}
+
+.local-dashboard-sidebar hr {
+    margin: 0.75rem 0;
+}
+
+/* Sidebar ancho */
+.local-dashboard-sidebar {
+    min-width: 250px;
+}
+
+/* Mobile spacing */
+@media (max-width: 768px) {
+    .local-dashboard-sidebar {
+        width: 100%;
+    }
+}
+
+/* Animación flecha */
+.transition-icon {
+    transition: transform 0.2s ease;
+}
+
+.transition-icon.rotate {
+    transform: rotate(180deg);
+}
+
+.rotate {
+    transform: rotate(180deg);
+    transition: transform 0.2s ease;
+}
+
+/* =========================
+   BASE PARA TODAS LAS TABLAS DEL DASHBOARD
+========================= */
+
+.local-dashboard-table {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bs-body-bg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* HEADER */
+.local-dashboard-table thead th {
+    background: #f8fafc;
+    color: #334155;
+    font-weight: 600;
+    border: none;
+    padding: 14px;
+    font-size: 14px;
+}
+
+/* FILAS */
+.local-dashboard-table tbody tr {
+    border-bottom: 1px solid #eef2f7;
+    transition: all 0.15s ease;
+}
+
+.local-dashboard-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* CELDAS */
+.local-dashboard-table td {
+    padding: 14px;
+    color: #475569;
+    font-size: 14px;
+}
+
+/* PRIMER COLUMNA */
+.local-dashboard-table td:first-child {
+    font-weight: 600;
+}
+
+/* ÚLTIMA COLUMNA (VALORES) */
+.local-dashboard-table td:last-child {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+/* =========================
+   PAGINACIÓN MOODLE
+========================= */
+
+.paging {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    font-size: 13px;
+}
+
+.paging a,
+.paging span {
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    color: #334155;
+    text-decoration: none;
+}
+
+.paging a:hover {
+    background: #e2e8f0;
+}
+
+.paging .current {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* Tabla detalle expandible */
+.detalle-row td {
+    border-top: none !important;
+    background: transparent !important;
+}
+
+.detalle-row .table {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.detalle-row .table th {
+    background: #f1f3f5;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.detalle-row .table td {
+    font-size: 0.85rem;
+}

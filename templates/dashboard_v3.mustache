@@ -1,0 +1,166 @@
+<div class="container-fluid local-dashboard-v3">
+
+    <h3 class="mb-4">Dashboard</h3>
+
+    <div class="d-flex justify-content-end mb-3">
+
+        <select id="filter-days" class="form-select w-auto">
+            <option value="7" {{#is7}}selected{{/is7}}>Últimos 7 días</option>
+            <option value="30" {{#is30}}selected{{/is30}}>Últimos 30 días</option>
+            <option value="90" {{#is90}}selected{{/is90}}>Últimos 90 días</option>
+        </select>
+
+    </div>
+
+    <!-- 🔹 Cards -->
+    <div class="row g-3 mb-4">
+
+        {{#kpis}}
+        <div class="col-xl-3 col-md-6">
+            <div class="dashboard-card">
+                <div class="card-content">
+                <div>
+                    <span class="card-title">{{label}}</span>
+                    <h2>{{value}}</h2>
+                    {{#trend}}
+                        <small class="{{trend_class}}">
+                            {{trend}}%
+                        </small>
+                    {{/trend}}
+                </div>
+                </div>
+            </div>
+        </div>
+        {{/kpis}}
+
+    </div>
+
+    <div class="dashboard-insights">
+        {{#insights}}
+            <div class="alert alert-warning">
+            {{message}}
+            </div>
+        {{/insights}}
+    </div>
+
+    <!-- 🔹 Gráficas -->
+    <div class="row g-4">
+
+        <!-- Usuarios -->
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h5>Usuarios por Año</h5>
+                    <a href="./detalle_usuarios_anio.php" class="btn btn-sm btn-outline-primary">
+                        Ver detalle
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div id="usuariosChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cursos -->
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h5>Cursos por Año</h5>
+                    <a href="./detalle_cursos_anio.php" class="btn btn-sm btn-outline-primary">
+                        Ver detalle
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div id="cursosChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categorías -->
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h5>Cursos por Categoría</h5>
+                    <a href="./detalle_cursos_categorias.php" class="btn btn-sm btn-outline-primary">
+                        Ver detalle
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div id="categoriasChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h5>Cursos Demandados</h5>
+                    <a href="./detalle_cursos_demandados.php" class="btn btn-sm btn-outline-primary">
+                        Ver detalle
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div id="inscritosChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h5>Mejores Promedios</h5>
+                    <a href="./detalle_cursos_promedio.php" class="btn btn-sm btn-outline-primary">
+                        Ver detalle
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div id="promedioChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h5>Usuarios activos en cursos</h5>
+                    <a href="./detalle_usuarios_activos.php" class="btn btn-sm btn-outline-primary">
+                        Ver detalle
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div id="actividadcursesChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h5>Cursos con mayor Progreso (%)</h5>
+                    <a href="./detalle_cursos_progreso.php" class="btn btn-sm btn-outline-primary">
+                        Ver detalle
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div id="topprogress"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h5>Finalizado vs No Finalizado</h5>
+                    <a href="./detalle_vs.php" class="btn btn-sm btn-outline-primary">
+                        Ver detalle
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div id="chartBarGroupVs"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

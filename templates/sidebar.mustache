@@ -1,0 +1,105 @@
+<ul class="nav flex-column bg-white border-end vh-100 p-3" style="min-width: 250px;">
+
+    <!-- Título -->
+    <li class="mb-3">
+        <h5 class="fw-bold mb-0">Dashboard</h5>
+        <small class="text-muted">Moodle</small>
+    </li>
+
+    <!-- Inicio -->
+    <li class="nav-item">
+        <a class="nav-link {{#isindex}}active fw-bold{{/isindex}}" href="{{{indexurl}}}">
+            <i class="fa fa-home me-2"></i> Inicio
+        </a>
+    </li>
+
+    <hr>
+
+    <!-- USUARIOS -->
+    <li class="text-muted small text-uppercase mb-1">Usuarios</li>
+
+    <li>
+        <button class="nav-link d-flex justify-content-between align-items-center w-100 text-start border-0 bg-transparent"
+                type="button"
+                data-toggle="collapse"
+                data-target="#usuariosMenu"
+                aria-expanded="{{#usuarios_open}}true{{/usuarios_open}}{{^usuarios_open}}false{{/usuarios_open}}">
+
+            <span>
+                <i class="fa fa-users me-2"></i> Usuarios
+            </span>
+
+            <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+        <div class="collapse {{#usuarios_open}}show{{/usuarios_open}}" id="usuariosMenu">
+            <ul class="nav flex-column ms-3 mt-1">
+
+                <li>
+                    <a class="nav-link small {{#isusuariosanio}}active fw-bold{{/isusuariosanio}}" href="{{{usuariosaniourl}}}">
+                        Por Año
+                    </a>
+                </li>
+
+                <li>
+                    <a class="nav-link small {{#isusuariosactivos}}active fw-bold{{/isusuariosactivos}}" href="{{{usuariosactivosurl}}}">
+                        Activos
+                    </a>
+                </li>
+
+                <li>
+                    <a class="nav-link small {{#isvs}}active fw-bold{{/isvs}}" href="{{{vsurl}}}">
+                        Finalizados
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </li>
+
+    <hr>
+
+    <!-- CURSOS -->
+    <li class="text-muted small text-uppercase mb-1">Cursos</li>
+
+    <li>
+        <button class="nav-link d-flex justify-content-between align-items-center w-100 text-start border-0 bg-transparent"
+                type="button"
+                data-toggle="collapse"
+                data-target="#cursosMenu">
+
+            <span><i class="fa fa-book me-2"></i> Cursos</span>
+
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div class="collapse {{#cursos_open}}show{{/cursos_open}}" id="cursosMenu">
+            <ul class="nav flex-column ms-3">
+                <li><a class="nav-link small {{#iscursosanio}}active fw-bold{{/iscursosanio}}" href="{{{cursosaniourl}}}">Por Año</a></li>
+                <li><a class="nav-link small {{#iscursoscat}}active fw-bold{{/iscursoscat}}" href="{{{cursoscaturl}}}">Categorías</a></li>
+                <li><a class="nav-link small {{#iscursosdem}}active fw-bold{{/iscursosdem}}" href="{{{cursosdemurl}}}">Demandados</a></li>
+                <li><a class="nav-link small {{#iscursosprom}}active fw-bold{{/iscursosprom}}" href="{{{cursospromurl}}}">Promedios</a></li>
+                <li><a class="nav-link small {{#iscursosprog}}active fw-bold{{/iscursosprog}}" href="{{{cursosprogurl}}}">Progreso</a></li>
+            </ul>
+        </div>
+    </li>
+
+    <hr>
+
+    <!-- OTROS -->
+    <li class="text-muted small text-uppercase mb-1">Otros</li>
+
+    <li class="nav-item">
+        <a class="nav-link {{#iscalificaciones}}active fw-bold{{/iscalificaciones}}" href="{{{calificacionesurl}}}">
+            <i class="fa fa-star me-2"></i> Calificaciones
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{#isprogreso}}active fw-bold{{/isprogreso}}" href="{{{progresourl}}}">
+            <i class="fa fa-chart-pie me-2"></i> Progreso
+        </a>
+    </li>
+
+</ul>
