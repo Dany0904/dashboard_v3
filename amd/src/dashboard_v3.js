@@ -6,34 +6,41 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
   ApexCharts,
 ) {
   return {
-    init: function () {
-        let days = document.getElementById("filter-days")?.value || 30;
+    init: function (params) {
+        let days = params?.days || 30;
 
-        Ajax.call([
+        const filter = document.getElementById("filter-days");
+
+        if (filter) {
+          filter.addEventListener("change", function () {
+            window.location.href = "?days=" + this.value;
+          });
+        }
+
+        const requests = Ajax.call([
           {
-            methodname: "local_dashboard_v3_get_dashboard_v3_data",
+            methodname: "local_dashboard_v3_get_dashboard_v3_charts",
             args: { days: parseInt(days) },
           },
-        ])[0]
-        .done(function (data) {
+          {
+            methodname: "local_dashboard_v3_get_dashboard_v3_tables",
+            args: { days: parseInt(days) },
+          },
+        ]);
 
-          const filter = document.getElementById("filter-days");
+        $.when(requests[0], requests[1]).done(function (chartsRes, tablesRes) {
+          const charts = chartsRes;
+          const tables = tablesRes;
 
-          if (filter) {
-            filter.addEventListener("change", function () {
-              const selectedDays = this.value;
-
-              // recargar con parámetro
-              window.location.href = "?days=" + selectedDays;
-            });
-          }
+          console.log("charts:", chartsRes);
+          console.log("tables:", tablesRes);
 
           let labels = [];
           let dataValues = [];
 
-          data.usersbyyear.forEach(function (item) {
-            labels.push(item.year);
-            dataValues.push(item.total);
+          charts.users.forEach(function (item) {
+            labels.push(item.label);
+            dataValues.push(item.value);
           });
 
           // Destruir gráfica previa
@@ -96,9 +103,9 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           let courseLabels = [];
           let courseValues = [];
 
-          data.coursesbyyear.forEach(function (item) {
-            courseLabels.push(item.year);
-            courseValues.push(item.total);
+          charts.courses.forEach(function (item) {
+            courseLabels.push(item.label);
+            courseValues.push(item.value);
           });
 
           // destruir instancia previa
@@ -167,9 +174,9 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           let catLabels = [];
           let catValues = [];
 
-          data.coursesbycategory.forEach(function (item) {
-            catLabels.push(item.name);
-            catValues.push(item.total);
+          charts.categories.forEach(function (item) {
+            catLabels.push(item.label);
+            catValues.push(item.value);
           });
 
           /**
@@ -243,7 +250,7 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           let enrollLabels = [];
           let enrollValues = [];
 
-          data.enrollments.forEach((item) => {
+          tables.enrollments.forEach((item) => {
             enrollLabels.push(item.name);
             enrollValues.push(item.total);
           });
@@ -292,7 +299,7 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           let avgLabels = [];
           let avgValues = [];
 
-          data.averages.forEach((item) => {
+          tables.averages.forEach((item) => {
             avgLabels.push(item.name);
             avgValues.push(item.average);
           });
@@ -347,7 +354,7 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           let actLabels = [];
           let actValues = [];
 
-          data.activitycourses.forEach((item) => {
+          tables.activitycourses.forEach((item) => {
             actLabels.push(item.name);
             actValues.push(item.total);
           });
@@ -408,7 +415,7 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           let labelsProgreso = [];
           let valuesProgreso = [];
 
-          data.progress.forEach((item) => {
+          tables.progress.forEach((item) => {
             labelsProgreso.push(item.fullname);
             valuesProgreso.push(item.progress);
           });
@@ -471,7 +478,7 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           let completed = [];
           let notcompleted = [];
 
-          data.vs.forEach((item) => {
+          tables.vs.forEach((item) => {
             labelsFinalizado.push(item.fullname);
             completed.push(item.completed);
             notcompleted.push(item.notcompleted);

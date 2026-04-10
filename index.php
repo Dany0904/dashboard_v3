@@ -6,10 +6,6 @@ require_once($CFG->dirroot . '/local/dashboard_v3/classes/service/kpi_service.ph
 use local_dashboard_v3\service\kpi_service;
 
 $days = optional_param('days', 30, PARAM_INT);
-$allowed = [7, 30, 90];
-if (!in_array($days, $allowed)) {
-    $days = 30;
-}
 
 require_login();
 
@@ -27,7 +23,9 @@ $PAGE->requires->css(new moodle_url('/local/dashboard_v3/styles.css'));
 $PAGE->requires->js(new moodle_url('/local/dashboard_v3/js/apexcharts.min.js'), true);
 
 $PAGE->requires->js_call_amd('local_dashboard_v3/sidebar', 'init');
-$PAGE->requires->js_call_amd('local_dashboard_v3/dashboard_v3', 'init');
+$PAGE->requires->js_call_amd('local_dashboard_v3/dashboard_v3', 'init', [
+    'days' => $days
+]);
 
 echo $OUTPUT->header();
 
