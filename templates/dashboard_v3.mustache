@@ -12,22 +12,28 @@
 
     </div>
 
-    <!-- 🔹 Cards -->
+    <!--  Cards -->
     <div class="row g-3 mb-4">
 
         {{#kpis}}
         <div class="col-xl-3 col-md-6">
             <div class="dashboard-card">
                 <div class="card-content">
-                <div>
                     <span class="card-title">{{label}}</span>
                     <h2>{{value}}</h2>
-                    {{#trend}}
+
+                    {{#show_trend}}
                         <small class="{{trend_class}}">
                             {{trend}}%
+
+                            {{#trend_label}}
+                                {{#up}} ▲{{/up}}
+                                {{#down}} ▼{{/down}}
+                                {{#equal}} ●{{/equal}}
+                            {{/trend_label}}
                         </small>
-                    {{/trend}}
-                </div>
+                    {{/show_trend}}
+                    
                 </div>
             </div>
         </div>
@@ -35,15 +41,39 @@
 
     </div>
 
-    <div class="dashboard-insights">
+    <div class="dashboard-insights mt-4">
+
         {{#insights}}
-            <div class="alert alert-warning">
-            {{message}}
+        <div class="insight-card insight-{{type}}">
+
+            <div class="insight-icon">
+                {{#type}}
+                    {{#danger}}🔴{{/danger}}
+                    {{#warning}}🟡{{/warning}}
+                    {{#info}}🔵{{/info}}
+                {{/type}}
             </div>
+
+            <div class="insight-content">
+                <div class="insight-title">
+                    {{#type}}
+                        {{#danger}}Atención crítica{{/danger}}
+                        {{#warning}}Revisar{{/warning}}
+                        {{#info}}Información{{/info}}
+                    {{/type}}
+                </div>
+
+                <div class="insight-message">
+                    {{message}}
+                </div>
+            </div>
+
+        </div>
         {{/insights}}
+
     </div>
 
-    <!-- 🔹 Gráficas -->
+    <!--  Gráficas -->
     <div class="row g-4">
 
         <!-- Usuarios -->

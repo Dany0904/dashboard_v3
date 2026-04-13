@@ -31,7 +31,7 @@ echo $OUTPUT->header();
 
 $renderer = $PAGE->get_renderer('local_dashboard_v3');
 
-$kpis = \local_dashboard_v3\service\kpi_service::get_kpis_initial($days);
+$data = \local_dashboard_v3\service\kpi_service::get_kpis_initial($days);
 
 echo '<div class="d-flex flex-column flex-md-row">';
 
@@ -48,7 +48,8 @@ echo $renderer->sidebar('index');
 echo '</div>';
 
 echo $OUTPUT->render_from_template('local_dashboard_v3/dashboard_v3', [
-    'kpis' => $kpis,
+    'kpis' => $data['kpis'],
+    'insights' => $data['insights'],
     'days' => $days,
     'is7' => $days == 7,
     'is30' => $days == 30,
