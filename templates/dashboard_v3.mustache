@@ -76,47 +76,54 @@
     <!--  Gráficas -->
     <div class="row g-4">
 
-        <!-- Usuarios -->
-        <div class="col-lg-6">
-            <div class="dashboard-panel">
-                <div class="panel-header d-flex justify-content-between align-items-center">
-                    <h5>Usuarios por Año</h5>
-                    <a href="./detalle_usuarios_anio.php" class="btn btn-sm btn-outline-primary">
-                        Ver detalle
-                    </a>
+        <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Actividad de Usuarios (últimos {{days}} días)
+                    </h6>
                 </div>
-                <div class="panel-body">
-                    <div id="usuariosChart"></div>
+                <div class="card-body">
+                    <div id="activityChart"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Cursos -->
-        <div class="col-lg-6">
-            <div class="dashboard-panel">
-                <div class="panel-header d-flex justify-content-between align-items-center">
-                    <h5>Cursos por Año</h5>
-                    <a href="./detalle_cursos_anio.php" class="btn btn-sm btn-outline-primary">
-                        Ver detalle
-                    </a>
+        <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Abandono de Cursos (%)
+                    </h6>
                 </div>
-                <div class="panel-body">
-                    <div id="cursosChart"></div>
+                <div class="card-body">
+                    <div id="abandonChart"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Categorías -->
-        <div class="col-lg-6">
-            <div class="dashboard-panel">
-                <div class="panel-header d-flex justify-content-between align-items-center">
-                    <h5>Cursos por Categoría</h5>
-                    <a href="./detalle_cursos_categorias.php" class="btn btn-sm btn-outline-primary">
-                        Ver detalle
-                    </a>
+        <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Cursos más populares
+                    </h6>
                 </div>
-                <div class="panel-body">
-                    <div id="categoriasChart"></div>
+                <div class="card-body">
+                    <div id="popularCoursesChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Actividad de Docentes
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div id="teachersChart"></div>
                 </div>
             </div>
         </div>
@@ -145,48 +152,6 @@
                 </div>
                 <div class="panel-body">
                     <div id="promedioChart"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="dashboard-panel">
-                <div class="panel-header d-flex justify-content-between align-items-center">
-                    <h5>Usuarios activos en cursos</h5>
-                    <a href="./detalle_usuarios_activos.php" class="btn btn-sm btn-outline-primary">
-                        Ver detalle
-                    </a>
-                </div>
-                <div class="panel-body">
-                    <div id="actividadcursesChart"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="dashboard-panel">
-                <div class="panel-header d-flex justify-content-between align-items-center">
-                    <h5>Cursos con mayor Progreso (%)</h5>
-                    <a href="./detalle_cursos_progreso.php" class="btn btn-sm btn-outline-primary">
-                        Ver detalle
-                    </a>
-                </div>
-                <div class="panel-body">
-                    <div id="topprogress"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="dashboard-panel">
-                <div class="panel-header d-flex justify-content-between align-items-center">
-                    <h5>Finalizado vs No Finalizado</h5>
-                    <a href="./detalle_vs.php" class="btn btn-sm btn-outline-primary">
-                        Ver detalle
-                    </a>
-                </div>
-                <div class="panel-body">
-                    <div id="chartBarGroupVs"></div>
                 </div>
             </div>
         </div>

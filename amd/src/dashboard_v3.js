@@ -6,8 +6,9 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
   ApexCharts,
 ) {
   return {
-    init: function (params) {
-        let days = params?.days || 30;
+    init: function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        let days = parseInt(urlParams.get("days")) || 30;
 
         const filter = document.getElementById("filter-days");
 
@@ -30,155 +31,6 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
 
         $.when(requests[0], requests[1]).done(function (chartsRes, tablesRes) {
           const charts = chartsRes;
-          const tables = tablesRes;
-
-          console.log("charts:", chartsRes);
-          console.log("tables:", tablesRes);
-
-          let labels = [];
-          let dataValues = [];
-
-          charts.users.forEach(function (item) {
-            labels.push(item.label);
-            dataValues.push(item.value);
-          });
-
-          // Destruir gráfica previa
-          if (window.usuariosChartInstance) {
-            window.usuariosChartInstance.destroy();
-          }
-
-          // 🔥 Configuración (tuya, casi intacta)
-          var options = {
-            chart: {
-              type: "line",
-              height: 350,
-              toolbar: { show: true },
-            },
-            series: [
-              {
-                name: "Total Usuarios",
-                data: dataValues,
-              },
-            ],
-            xaxis: {
-              categories: labels,
-              title: { text: "Año" },
-            },
-            yaxis: {
-              title: { text: "Cantidad de Usuarios" },
-            },
-            stroke: {
-              curve: "smooth",
-              width: 2,
-            },
-            markers: {
-              size: 5,
-              colors: ["#4e73df"],
-              strokeWidth: 2,
-            },
-            tooltip: {
-              theme: "light",
-              y: {
-                formatter: function (value) {
-                  return value.toLocaleString();
-                },
-              },
-            },
-            colors: ["#4e73df"],
-          };
-
-          //  Render
-          window.usuariosChartInstance = new ApexCharts(
-            document.querySelector("#usuariosChart"),
-            options,
-          );
-
-          window.usuariosChartInstance.render();
-
-          // =======================
-          // CURSOS POR AÑO
-          // =======================
-
-          let courseLabels = [];
-          let courseValues = [];
-
-          charts.courses.forEach(function (item) {
-            courseLabels.push(item.label);
-            courseValues.push(item.value);
-          });
-
-          // destruir instancia previa
-          if (window.cursosChartInstance) {
-            window.cursosChartInstance.destroy();
-          }
-
-          // configuración ApexCharts (tuya adaptada)
-          var cursosOptions = {
-            chart: {
-              type: "bar",
-              height: 350,
-              toolbar: { show: true },
-            },
-            series: [
-              {
-                name: "Total de Cursos",
-                data: courseValues,
-              },
-            ],
-            xaxis: {
-              categories: courseLabels,
-              title: { text: "Año" },
-            },
-            yaxis: {
-              title: { text: "Cantidad de Cursos" },
-              min: 0,
-            },
-            colors: ["#008FFB"],
-            dataLabels: {
-              enabled: true,
-              formatter: function (val) {
-                return val.toLocaleString();
-              },
-            },
-            tooltip: {
-              theme: "light",
-              y: {
-                formatter: function (value) {
-                  return value.toLocaleString();
-                },
-              },
-            },
-            plotOptions: {
-              bar: {
-                borderRadius: 4,
-                horizontal: false,
-                columnWidth: "60%",
-              },
-            },
-          };
-
-          // render
-          window.cursosChartInstance = new ApexCharts(
-            document.querySelector("#cursosChart"),
-            cursosOptions,
-          );
-
-          window.cursosChartInstance.render();
-
-          // =======================
-          // CURSOS POR CATEGORÍA
-          // =======================
-
-          // preparar datos
-          let catLabels = [];
-          let catValues = [];
-
-          charts.categories.forEach(function (item) {
-            catLabels.push(item.label);
-            catValues.push(item.value);
-          });
-
           /**
            * Generate color array for chart.
            *
@@ -201,48 +53,6 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
             return baseColors.slice(0, n);
           }
 
-          let colors = generateColors(catLabels.length);
-
-          // destruir previa
-          if (window.categoriasChartInstance) {
-            window.categoriasChartInstance.destroy();
-          }
-
-          // config ApexCharts
-          var categoriasOptions = {
-            chart: {
-              type: "donut",
-              height: 350,
-            },
-            series: catValues,
-            labels: catLabels,
-            colors: colors,
-            legend: {
-              position: "bottom",
-            },
-            dataLabels: {
-              enabled: true,
-              formatter: function (val) {
-                return val.toFixed(1) + "%";
-              },
-            },
-            tooltip: {
-              y: {
-                formatter: function (value) {
-                  return value + " cursos";
-                },
-              },
-            },
-          };
-
-          // render
-          window.categoriasChartInstance = new ApexCharts(
-            document.querySelector("#categoriasChart"),
-            categoriasOptions,
-          );
-
-          window.categoriasChartInstance.render();
-
           // =======================
           // Cursos Demandados
           // =======================
@@ -250,7 +60,7 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           let enrollLabels = [];
           let enrollValues = [];
 
-          tables.enrollments.forEach((item) => {
+          charts.enrollments.forEach((item) => {
             enrollLabels.push(item.name);
             enrollValues.push(item.total);
           });
@@ -299,7 +109,7 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           let avgLabels = [];
           let avgValues = [];
 
-          tables.averages.forEach((item) => {
+          charts.averages.forEach((item) => {
             avgLabels.push(item.name);
             avgValues.push(item.average);
           });
@@ -347,197 +157,225 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
 
           window.promedioChartInstance.render();
 
-          // =======================
-          // Usuarios activos en Cursos
-          // =======================
+          // ===============================
+          // ACTIVIDAD DE USUARIOS
+          // ===============================
 
-          let actLabels = [];
-          let actValues = [];
+          let activityLabels = [];
+          let activityData = [];
 
-          tables.activitycourses.forEach((item) => {
-            actLabels.push(item.name);
-            actValues.push(item.total);
+          charts.activity.forEach(function (item) {
+            activityLabels.push(item.label);
+            activityData.push(item.value);
           });
 
-          // 🔥 fallback para pruebas
-          if (actValues.length === 0) {
-            console.warn("Sin datos de actividad, usando mock");
-            actLabels = ["Curso A", "Curso B", "Curso C"];
-            actValues = [12, 8, 5];
+          // destruir si ya existe
+          if (window.activityChartInstance) {
+            window.activityChartInstance.destroy();
           }
 
-          if (window.activityCoursesChartInstance) {
-            window.activityCoursesChartInstance.destroy();
-          }
-
-          const optionsActivity = {
+          var activityOptions = {
             chart: {
-              type: "bar",
+              type: "area",
               height: 350,
+              toolbar: { show: true },
             },
             series: [
               {
-                name: "Usuarios activos",
-                data: actValues,
+                name: "Usuarios Activos",
+                data: activityData,
               },
             ],
             xaxis: {
-              categories: actLabels,
+              categories: activityLabels,
+              title: { text: "Día" },
             },
-            colors: ["#00E396"],
-            plotOptions: {
-              bar: {
-                borderRadius: 6,
-                columnWidth: "60%",
-              },
+            yaxis: {
+              title: { text: "Usuarios" },
+            },
+            stroke: {
+              curve: "smooth",
+              width: 2,
             },
             dataLabels: {
-              enabled: true,
+              enabled: false,
+            },
+            fill: {
+              type: "gradient",
+              gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.4,
+                opacityTo: 0.1,
+              },
             },
             tooltip: {
               y: {
-                formatter: (val) => val + " usuarios",
+                formatter: function (val) {
+                  return val + " usuarios";
+                },
+              },
+            },
+            colors: ["#1cc88a"]
+          };
+
+          window.activityChartInstance = new ApexCharts(
+            document.querySelector("#activityChart"),
+            activityOptions
+          );
+
+          window.activityChartInstance.render();
+
+          // ===============================
+          //  ABANDONO DE CURSOS
+          // ===============================
+
+          let abandonLabels = [];
+          let abandonData = [];
+
+          charts.abandon.forEach(function (item) {
+            abandonLabels.push(item.label);
+            abandonData.push(item.value);
+          });
+
+          if (window.abandonChartInstance) {
+            window.abandonChartInstance.destroy();
+          }
+
+          var abandonOptions = {
+            chart: {
+              type: "area",
+              height: 350,
+              toolbar: { show: true },
+            },
+            series: [
+              {
+                name: "% Abandono",
+                data: abandonData,
+              },
+            ],
+            xaxis: {
+              categories: abandonLabels,
+              title: { text: "Día" },
+            },
+            yaxis: {
+              labels: {
+                formatter: function (val) {
+                  return val + "%";
+                },
+              },
+              title: { text: "Porcentaje" },
+            },
+            stroke: {
+              curve: "smooth",
+              width: 2,
+            },
+            fill: {
+              type: "gradient",
+              gradient: {
+                opacityFrom: 0.5,
+                opacityTo: 0.1,
+              },
+            },
+            colors: ["#e74a3b"],
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return val + "% abandono";
+                },
               },
             },
           };
 
-          window.activityCoursesChartInstance = new ApexCharts(
-            document.querySelector("#actividadcursesChart"),
-            optionsActivity,
+          window.abandonChartInstance = new ApexCharts(
+            document.querySelector("#abandonChart"),
+            abandonOptions
           );
 
-          window.activityCoursesChartInstance.render();
+          window.abandonChartInstance.render();
 
-          // =======================
-          //  Cursos con mayor Progreso (%)
-          // =======================
+           // ===============================
+          //  CURSOS POPULARES
+          // ===============================
 
-          let labelsProgreso = [];
-          let valuesProgreso = [];
+          let courseLabels = [];
+          let courseData = [];
 
-          tables.progress.forEach((item) => {
-            labelsProgreso.push(item.fullname);
-            valuesProgreso.push(item.progress);
+          charts.popularcourses.forEach(function (item) {
+            courseLabels.push(item.label);
+            courseData.push(item.value);
           });
 
-          if (window.topProgressChartInstance) {
-            window.topProgressChartInstance.destroy();
+          if (window.popularCoursesChartInstance) {
+            window.popularCoursesChartInstance.destroy();
           }
 
-          window.topProgressChartInstance = new ApexCharts(
-            document.querySelector("#topprogress"),
-            {
-              chart: {
-                type: "bar",
-                height: 350,
-                toolbar: { show: true },
-              },
-              series: [
-                {
-                  name: "Progreso (%)",
-                  data: valuesProgreso,
-                },
-              ],
-              xaxis: {
-                categories: labelsProgreso,
-                title: { text: "Cursos" },
-              },
-              yaxis: {
-                min: 0,
-                max: 100,
-                title: { text: "Progreso (%)" },
-                labels: {
-                  formatter: (val) => val + "%",
-                },
-              },
-              dataLabels: {
-                enabled: true,
-                formatter: (val) => val.toFixed(0) + "%",
-              },
-              tooltip: {
-                y: {
-                  formatter: (val) => val.toFixed(2) + "%",
-                },
-              },
-              plotOptions: {
-                bar: {
-                  borderRadius: 6,
-                  columnWidth: "60%",
-                },
-              },
-              colors: ["#6366f1"],
+          var popularOptions = {
+            chart: {
+              type: "bar",
+              height: 350,
             },
+            series: [{
+              name: "Actividad",
+              data: courseData
+            }],
+            xaxis: {
+              categories: courseLabels,
+            },
+            plotOptions: {
+              bar: {
+                horizontal: true
+              }
+            },
+            colors: ["#36b9cc"],
+          };
+
+          window.popularCoursesChartInstance = new ApexCharts(
+            document.querySelector("#popularCoursesChart"),
+            popularOptions
           );
 
-          window.topProgressChartInstance.render();
+          window.popularCoursesChartInstance.render();
 
-          // =========================
-          // Finalizado vs No Finalizado
-          // =========================
-          let labelsFinalizado = [];
-          let completed = [];
-          let notcompleted = [];
+          // ===============================
+          // ACTIVIDAD DOCENTES
+          // ===============================
 
-          tables.vs.forEach((item) => {
-            labelsFinalizado.push(item.fullname);
-            completed.push(item.completed);
-            notcompleted.push(item.notcompleted);
+          let teacherLabels = [];
+          let teacherData = [];
+
+          charts.teachers.forEach(function (item) {
+            teacherLabels.push(item.label);
+            teacherData.push(item.value);
           });
 
-          if (window.comparisonChartInstance) {
-            window.comparisonChartInstance.destroy();
+          if (window.teachersChartInstance) {
+            window.teachersChartInstance.destroy();
           }
 
-          window.comparisonChartInstance = new ApexCharts(
-            document.querySelector("#chartBarGroupVs"),
-            {
-              chart: {
-                type: "bar",
-                height: 350,
-                toolbar: { show: true },
-              },
-              series: [
-                {
-                  name: "No Finalizado",
-                  data: notcompleted,
-                },
-                {
-                  name: "Finalizado",
-                  data: completed,
-                },
-              ],
-              xaxis: {
-                categories: labelsFinalizado,
-                title: { text: "Cursos" },
-              },
-              yaxis: {
-                title: { text: "Usuarios" },
-                min: 0,
-              },
-              colors: ["#ef4444", "#22c55e"], // 🔥 rojo / verde moderno
-              plotOptions: {
-                bar: {
-                  columnWidth: "60%",
-                  borderRadius: 5,
-                },
-              },
-              dataLabels: {
-                enabled: false,
-              },
-              tooltip: {
-                y: {
-                  formatter: function (val) {
-                    return val + " usuarios";
-                  },
-                },
-              },
-              legend: {
-                position: "top",
-              },
+          var teacherOptions = {
+            chart: {
+              type: "line",
+              height: 350,
             },
+            series: [{
+              name: "Docentes activos",
+              data: teacherData
+            }],
+            xaxis: {
+              categories: teacherLabels,
+            },
+            stroke: {
+              curve: "smooth"
+            },
+            colors: ["#f6c23e"], // amarillo = docentes
+          };
+
+          window.teachersChartInstance = new ApexCharts(
+            document.querySelector("#teachersChart"),
+            teacherOptions
           );
 
-          window.comparisonChartInstance.render();
+          window.teachersChartInstance.render();
         })
         .fail(function (error) {
           console.error(error);
