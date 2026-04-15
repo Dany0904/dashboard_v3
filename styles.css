@@ -260,3 +260,17 @@
     border-color: #0d6efd;
     background: #eef5ff;
 }
+
+.trend-up {
+    color: #1cc88a;
+    font-weight: 600;
+}
+
+.trend-down {
+    color: #e74a3b;
+    font-weight: 600;
+}
+
+.trend-neutral {
+    color: #858796;
+}

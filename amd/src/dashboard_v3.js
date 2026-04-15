@@ -29,7 +29,7 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function (
           },
         ]);
 
-        $.when(requests[0], requests[1]).done(function (chartsRes, tablesRes) {
+        $.when(requests[0], requests[1]).done(function (chartsRes) {
           const charts = chartsRes;
           /**
            * Generate color array for chart.

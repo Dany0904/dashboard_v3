@@ -11,9 +11,7 @@ class renderer extends plugin_renderer_base {
         $data = [
             // URLs
             'indexurl' => (new moodle_url('/local/dashboard_v3/index.php'))->out(),
-            'preturnosurl' => (new moodle_url('/local/dashboard_v3/detalle_preturnos.php'))->out(),
-            'quizurl' => (new moodle_url('/local/dashboard_v3/detalle_quiz.php'))->out(),
-            'horasurl' => (new moodle_url('/local/dashboard_v3/detalle_horas.php'))->out(),
+            'usuariosurl' => (new moodle_url('/local/dashboard_v3/detalle_usuarios.php'))->out(),
 
             'usuariosaniourl' => (new moodle_url('/local/dashboard_v3/detalle_usuarios_anio.php'))->out(),
             'usuariosactivosurl' => (new moodle_url('/local/dashboard_v3/detalle_usuarios_activos.php'))->out(),
@@ -30,9 +28,7 @@ class renderer extends plugin_renderer_base {
 
             // Activos
             'isindex' => $currentpage === 'index',
-            'ispreturnos' => $currentpage === 'preturnos',
-            'isquiz' => $currentpage === 'quiz',
-            'ishoras' => $currentpage === 'horas',
+            'isusuarios' => $currentpage === 'usuarios',
 
             'isusuariosanio' => $currentpage === 'usuarios_anio',
             'isusuariosactivos' => $currentpage === 'usuarios_activos',

@@ -29,4 +29,13 @@ $functions = [
         'type'        => 'read',
         'ajax'        => true,
     ],
+
+    'local_dashboard_v3_get_user_activity_chart' => [
+        'classname'   => 'local_dashboard_v3\external\get_user_activity_chart',
+        'methodname'  => 'execute',
+        'classpath'   => '',
+        'description' => 'Obtiene actividad de usuarios (actual vs anterior)',
+        'type'        => 'read',
+        'ajax'        => true,
+    ]
 ];
