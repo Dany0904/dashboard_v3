@@ -3,10 +3,12 @@
 define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function ($, Ajax, ApexCharts) {
   return {
     init: function () {
+
       const urlParams = new URLSearchParams(window.location.search);
 
-        let days = parseInt(urlParams.get("days")) || 30;
-        let courseid = parseInt(urlParams.get("courseid")) || 0;
+      let days = parseInt(urlParams.get("days")) || 30;
+      let courseid = parseInt(urlParams.get("courseid")) || 0;
+
       // =========================
       // Filtros
       // =========================
@@ -30,34 +32,53 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function ($, Aj
       }
 
       // =========================
-      // AJAX
+      // AJAX (MULTIPLE REQUESTS)
       // =========================
-      Ajax.call([{
-        methodname: "local_dashboard_v3_get_user_activity_chart",
-        args: {
-          days: parseInt(days),
-          courseid: parseInt(courseid)
+      const requests = Ajax.call([
+        {
+          methodname: "local_dashboard_v3_get_user_activity_chart",
+          args: {
+            days: days,
+            courseid: courseid
+          }
+        },
+        {
+          methodname: "local_dashboard_v3_get_user_segmentation",
+          args: {
+            days: days,
+            courseid: courseid
+          }
         }
-      }])[0].done(function (res) {
+      ]);
 
+      $.when(requests[0], requests[1]).done(function (activityRes, segmentationRes) {
+
+        // ======================================
+        // GRÁFICA 1: ACTIVIDAD USUARIOS
+        // ======================================
         let labels = [];
         let currentData = [];
         let previousData = [];
 
-        res.current.forEach(item => {
+        console.log(segmentationRes);
+
+        activityRes.current.forEach(item => {
           labels.push(item.label);
           currentData.push(item.value);
         });
 
-        res.previous.forEach(item => {
+        activityRes.previous.forEach(item => {
           previousData.push(item.value);
         });
 
-        if (window.activityChartInstance) {
+        if (
+          window.activityChartInstance &&
+          typeof window.activityChartInstance.destroy === "function"
+        ) {
           window.activityChartInstance.destroy();
         }
 
-        var options = {
+        const activityOptions = {
           chart: {
             type: "line",
             height: 350
@@ -90,10 +111,67 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function ($, Aj
 
         window.activityChartInstance = new ApexCharts(
           document.querySelector("#activityChart"),
-          options
+          activityOptions
         );
 
         window.activityChartInstance.render();
+
+        // ======================================
+        // GRÁFICA 2: SEGMENTACIÓN (DONUT)
+        // ======================================
+        const series = [
+          segmentationRes.active,
+          segmentationRes.recurrent,
+          segmentationRes.new,
+          segmentationRes.inactive
+        ];
+
+        const labelsDonut = [
+          "Activos",
+          "Recurrentes",
+          "Nuevos",
+          "Inactivos"
+        ];
+
+        if (
+          window.userSegmentationChart &&
+          typeof window.userSegmentationChart.destroy === "function"
+        ) {
+          window.userSegmentationChart.destroy();
+        }
+
+        const donutOptions = {
+          chart: {
+            type: "donut",
+            height: 350
+          },
+          series: series,
+          labels: labelsDonut,
+          colors: ["#1cc88a", "#36b9cc", "#4e73df", "#e74a3b"],
+          legend: {
+            position: "bottom"
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+              return val.toFixed(1) + "%";
+            }
+          },
+          tooltip: {
+            y: {
+              formatter: function (val) {
+                return val + " usuarios";
+              }
+            }
+          }
+        };
+
+        window.userSegmentationChart = new ApexCharts(
+          document.querySelector("#userSegmentationChart"),
+          donutOptions
+        );
+
+        window.userSegmentationChart.render();
 
       }).fail(function (err) {
         console.error(err);

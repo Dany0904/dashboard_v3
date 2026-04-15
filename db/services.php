@@ -37,5 +37,14 @@ $functions = [
         'description' => 'Obtiene actividad de usuarios (actual vs anterior)',
         'type'        => 'read',
         'ajax'        => true,
-    ]
+    ],
+
+    'local_dashboard_v3_get_user_segmentation' => [
+        'classname'   => 'local_dashboard_v3\external\get_user_segmentation',
+        'methodname'  => 'execute',
+        'classpath'   => '',
+        'description' => 'Obtiene distribución de usuarios (activos, nuevos, recurrentes, inactivos)',
+        'type'        => 'read',
+        'ajax'        => true,
+    ],
 ];
