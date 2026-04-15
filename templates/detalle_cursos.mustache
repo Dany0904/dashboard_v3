@@ -1,0 +1,67 @@
+<div class="container-fluid local-dashboard-v3">
+
+    <h3 class="mb-4">Dashboard</h3>
+
+    <div class="d-flex justify-content-end mb-3">
+
+        <select id="filter-days" class="form-select w-auto">
+            <option value="7" {{#is7}}selected{{/is7}}>Últimos 7 días</option>
+            <option value="30" {{#is30}}selected{{/is30}}>Últimos 30 días</option>
+            <option value="90" {{#is90}}selected{{/is90}}>Últimos 90 días</option>
+        </select>
+
+        <select id="filter-course" class="form-select w-auto ms-2">
+            <option value="0">Todos los cursos</option>
+            {{#courses}}
+                <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                    {{name}}
+                </option>
+            {{/courses}}
+        </select>
+
+    </div>
+
+     <!-- KPIs -->
+    <div class="row g-3">
+
+        {{#kpis}}
+        <div class="col-xl-3 col-md-6">
+            <div class="dashboard-card">
+                <span>{{label}}</span>
+                <h2>{{value}}</h2>
+
+                <small class="{{trend_class}}">
+                    {{trend}}%
+                    {{#trend_label}}
+                        {{#up}}▲{{/up}}
+                        {{#down}}▼{{/down}}
+                        {{#equal}}●{{/equal}}
+                    {{/trend_label}}
+                </small>
+            </div>
+        </div>
+        {{/kpis}}
+
+    </div>
+    <!-- Gráfica -->
+    <div class="row">
+        <div class="col-lg-6  col-12">
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                       Actividad de cursos (últimos {{days}} días)
+                    </h6>
+                    <small class="text-muted">
+                        Eventos en cursos vs periodo anterior
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <div id="activityChart"></div>
+                </div>
+
+            </div>
+        </div>  
+    </div>
+</div>

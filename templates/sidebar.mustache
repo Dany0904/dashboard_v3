@@ -25,45 +25,13 @@
     <hr>
 
     <!-- CURSOS -->
-    <li class="text-muted small text-uppercase mb-1">Cursos</li>
-
-    <li>
-        <button class="nav-link d-flex justify-content-between align-items-center w-100 text-start border-0 bg-transparent"
-                type="button"
-                data-toggle="collapse"
-                data-target="#cursosMenu">
-
-            <span><i class="fa fa-book me-2"></i> Cursos</span>
-
-            <i class="fa-solid fa-chevron-down"></i>
-        </button>
-
-        <div class="collapse {{#cursos_open}}show{{/cursos_open}}" id="cursosMenu">
-            <ul class="nav flex-column ms-3">
-                <li><a class="nav-link small {{#iscursosanio}}active fw-bold{{/iscursosanio}}" href="{{{cursosaniourl}}}">Por Año</a></li>
-                <li><a class="nav-link small {{#iscursoscat}}active fw-bold{{/iscursoscat}}" href="{{{cursoscaturl}}}">Categorías</a></li>
-                <li><a class="nav-link small {{#iscursosdem}}active fw-bold{{/iscursosdem}}" href="{{{cursosdemurl}}}">Demandados</a></li>
-                <li><a class="nav-link small {{#iscursosprom}}active fw-bold{{/iscursosprom}}" href="{{{cursospromurl}}}">Promedios</a></li>
-                <li><a class="nav-link small {{#iscursosprog}}active fw-bold{{/iscursosprog}}" href="{{{cursosprogurl}}}">Progreso</a></li>
-            </ul>
-        </div>
+    <li class="nav-item">
+        <a class="nav-link {{#iscursos}}active fw-bold{{/iscursos}}" href="{{{cursosurl}}}">
+            <i class="fa fa-book me-2"></i> Cursos
+        </a>
     </li>
 
     <hr>
 
-    <!-- OTROS -->
-    <li class="text-muted small text-uppercase mb-1">Otros</li>
-
-    <li class="nav-item">
-        <a class="nav-link {{#iscalificaciones}}active fw-bold{{/iscalificaciones}}" href="{{{calificacionesurl}}}">
-            <i class="fa fa-star me-2"></i> Calificaciones
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link {{#isprogreso}}active fw-bold{{/isprogreso}}" href="{{{progresourl}}}">
-            <i class="fa fa-chart-pie me-2"></i> Progreso
-        </a>
-    </li>
 
 </ul>

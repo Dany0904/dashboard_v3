@@ -47,4 +47,13 @@ $functions = [
         'type'        => 'read',
         'ajax'        => true,
     ],
+
+    'local_dashboard_v3_get_course_activity_chart' => [
+        'classname' => 'local_dashboard_v3\external\get_course_activity_chart',
+        'methodname' => 'execute',
+        'classpath' => '',
+        'description' => 'Actividad de cursos (línea)',
+        'type' => 'read',
+        'ajax' => true,
+    ]
 ];
