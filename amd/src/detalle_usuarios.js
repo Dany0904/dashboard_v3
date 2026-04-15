@@ -60,8 +60,6 @@ define(["jquery", "core/ajax", "local_dashboard_v3/apexcharts"], function ($, Aj
         let currentData = [];
         let previousData = [];
 
-        console.log(segmentationRes);
-
         activityRes.current.forEach(item => {
           labels.push(item.label);
           currentData.push(item.value);

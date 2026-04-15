@@ -50,6 +50,34 @@
 
     </div>
 
+    <div class="dashboard-insights mt-4">
+
+        {{#insights}}
+        <div class="insight-card insight-{{type}}">
+
+            <div class="insight-icon">
+                {{#is_danger}}🔴{{/is_danger}}
+                {{#is_warning}}🟡{{/is_warning}}
+                {{#is_info}}🔵{{/is_info}}
+            </div>
+
+            <div class="insight-content">
+                <div class="insight-title">
+                    {{#is_danger}}Atención crítica{{/is_danger}}
+                    {{#is_warning}}Revisar{{/is_warning}}
+                    {{#is_info}}Información{{/is_info}}
+                </div>
+
+                <div class="insight-message">
+                    {{message}}
+                </div>
+            </div>
+
+        </div>
+        {{/insights}}
+
+    </div>
+
     <!-- Gráfica -->
     <div class="row">
         <div class="col-lg-6  col-12">
@@ -84,6 +112,24 @@
 
                 <div class="card-body">
                     <div id="userSegmentationChart"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Usuarios más activos -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Usuarios más activos
+                    </h6>
+                </div>
+
+                <div class="card-body">
+                    {{{users_table}}}
                 </div>
 
             </div>

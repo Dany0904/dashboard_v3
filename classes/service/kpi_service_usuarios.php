@@ -5,6 +5,16 @@ namespace local_dashboard_v3\service;
 defined('MOODLE_INTERNAL') || die();
 
 class kpi_service_usuarios {
+    private static function format_insight($type, $message)
+    {
+        return [
+            'type' => $type,
+            'message' => $message,
+            'is_danger' => $type === 'danger',
+            'is_warning' => $type === 'warning',
+            'is_info' => $type === 'info'
+        ];
+    }
 
     public static function get_user_kpis($days = 30, $courseid = 0)
     {
@@ -171,6 +181,108 @@ class kpi_service_usuarios {
             $format_kpi('Engagement', round($engagement, 2) . '%', $calc_trend($engagement, $engagement_prev))
         ];
 
-        return $kpis;
+        // =========================
+        // INSIGHTS INTELIGENTES (USUARIOS)
+        // =========================
+        $insights = [];
+
+        $trend_active = $calc_trend($totalactive, $totalactive_prev);
+
+        // 1. Caída fuerte de actividad
+        if ($trend_active <= -30) {
+            $insights[] = self::format_insight(
+                'danger',
+                "Los usuarios activos cayeron " . abs($trend_active) . "% vs periodo anterior"
+            );
+        }
+
+        // 2. Crecimiento fuerte
+        if ($trend_active >= 30) {
+            $insights[] = self::format_insight(
+                'info',
+                "Crecimiento positivo: usuarios activos +" . $trend_active . "%"
+            );
+        }
+
+        // 3. Alto porcentaje de inactivos
+        $inactive_ratio = $totalusers > 0
+            ? ($inactive / $totalusers) * 100
+            : 0;
+
+        if ($inactive_ratio > 60) {
+            $insights[] = self::format_insight(
+                'warning',
+                round($inactive_ratio, 1) . "% de usuarios están inactivos"
+            );
+        }
+
+        // 4. Dependencia de usuarios nuevos
+        if ($totalactive > 0) {
+            $new_ratio = ($newcurrent / $totalactive) * 100;
+
+            if ($new_ratio > 70) {
+                $insights[] = self::format_insight(
+                    'warning',
+                    "Alta dependencia de usuarios nuevos (" . round($new_ratio, 1) . "%)"
+                );
+            }
+        }
+
+        // 5. Baja recurrencia
+        if ($totalactive > 0) {
+            $recurrent_ratio = ($recurrent / $totalactive) * 100;
+
+            if ($recurrent_ratio < 40) {
+                $insights[] = self::format_insight(
+                    'warning',
+                    "Baja recurrencia: solo " . round($recurrent_ratio, 1) . "% regresan"
+                );
+            }
+        }
+
+        // 6. Engagement bajo
+        if ($engagement < 20) {
+            $insights[] = self::format_insight(
+                'danger',
+                "Engagement crítico (" . round($engagement, 1) . "%)"
+            );
+        }
+
+        // 7. Actividad muy baja
+        if ($totalactive < 5) {
+            $insights[] = self::format_insight(
+                'warning',
+                "Muy pocos usuarios activos en el periodo"
+            );
+        }
+
+        // 8. Sin actividad en curso específico
+        if (!empty($courseid) && $totalactive == 0) {
+            $insights[] = self::format_insight(
+                'danger',
+                "Este curso no tiene actividad en el periodo seleccionado"
+            );
+        }
+
+        // 9. Buen engagement
+        if ($engagement > 60) {
+            $insights[] = self::format_insight(
+                'info',
+                "Buen nivel de engagement (" . round($engagement, 1) . "%)"
+            );
+        }
+
+        // 10. Base sólida
+        if ($recurrent > $newcurrent) {
+            $insights[] = self::format_insight(
+                'info',
+                "Base sólida: más usuarios recurrentes que nuevos"
+            );
+        }
+
+        return [
+            'kpis' => $kpis,
+            'insights' => $insights
+        ];
     }
 }

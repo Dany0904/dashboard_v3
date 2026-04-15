@@ -4,6 +4,13 @@ require_once('../../config.php');
 require_once($CFG->dirroot . '/local/dashboard_v3/classes/service/kpi_service_usuarios.php');
 
 use local_dashboard_v3\service\kpi_service_usuarios;
+use local_dashboard_v3\service\user_table_service;
+
+require_login();
+
+$context = context_system::instance();
+
+require_capability('local/dashboard_v3:view', $context);
 
 $days = optional_param('days', 30, PARAM_INT);
 $courseid = optional_param('courseid', 0, PARAM_INT);
@@ -25,12 +32,6 @@ foreach ($courses as $c) {
     ];
 }
 
-require_login();
-
-$context = context_system::instance();
-
-require_capability('local/dashboard_v3:view', $context);
-
 $PAGE->set_url('/local/dashboard_v3/detalle_usuarios.php');
 $PAGE->set_pagelayout('report');
 
@@ -50,6 +51,10 @@ echo $OUTPUT->header();
 
 $renderer = $PAGE->get_renderer('local_dashboard_v3');
 
+$users = user_table_service::get_top_users($days, $courseid);
+
+$tablehtml = $renderer->render_top_users_table($users);
+
 $data = \local_dashboard_v3\service\kpi_service_usuarios::get_user_kpis($days, $courseid);
 
 echo '<div class="d-flex flex-column flex-md-row">';
@@ -67,12 +72,14 @@ echo $renderer->sidebar('usuarios');
 echo '</div>';
 
 echo $OUTPUT->render_from_template('local_dashboard_v3/detalle_usuarios', [
-    'kpis' => $data,
+    'kpis' => $data['kpis'],
+    'insights' => $data['insights'],
     'days' => $days,
     'courses' => $courselist,
     'is7' => $days == 7,
     'is30' => $days == 30,
-    'is90' => $days == 90
+    'is90' => $days == 90,
+    'users_table' => $tablehtml
 ]);
 
 echo '</div>';
