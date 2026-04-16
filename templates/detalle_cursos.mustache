@@ -1,69 +1,96 @@
 <div class="container-fluid local-dashboard-v3">
 
-    <h3 class="mb-4">Dashboard</h3>
+    <div class="dashboard-header mb-4">
+        <h2 class="dashboard-title mb-0">Cursos</h2>
+    </div>
 
-    <div class="d-flex justify-content-end mb-3">
+    <div class="dashboard-filters d-flex justify-content-end flex-wrap gap-2 mb-3">
 
-        <select id="filter-days" class="form-select w-auto">
-            <option value="7" {{#is7}}selected{{/is7}}>Últimos 7 días</option>
-            <option value="30" {{#is30}}selected{{/is30}}>Últimos 30 días</option>
-            <option value="90" {{#is90}}selected{{/is90}}>Últimos 90 días</option>
-        </select>
+        <!-- Filtro días -->
+        <div class="filter-control">
+            <select id="filter-days" class="form-select form-select-sm">
+                <option value="7" {{#is7}}selected{{/is7}}>Últimos 7 días</option>
+                <option value="30" {{#is30}}selected{{/is30}}>Últimos 30 días</option>
+                <option value="90" {{#is90}}selected{{/is90}}>Últimos 90 días</option>
+            </select>
+        </div>
 
-        <select id="filter-course" class="form-select w-auto ms-2">
-            <option value="0">Todos los cursos</option>
-            {{#courses}}
-                <option value="{{id}}" {{#selected}}selected{{/selected}}>
-                    {{name}}
-                </option>
-            {{/courses}}
-        </select>
+        <!-- Filtro cursos -->
+        <div class="filter-control">
+            <select id="filter-course" class="form-select form-select-sm">
+                <option value="0">Todos los cursos</option>
+                {{#courses}}
+                    <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                        {{name}}
+                    </option>
+                {{/courses}}
+            </select>
+        </div>
 
     </div>
 
      <!-- KPIs -->
-    <div class="row g-3">
+    <div class="row g-3 mb-4">
 
         {{#kpis}}
         <div class="col-xl-3 col-md-6">
-            <div class="dashboard-card">
-                <span>{{label}}</span>
-                <h2>{{value}}</h2>
 
-                <small class="{{trend_class}}">
-                    {{trend}}%
-                    {{#trend_label}}
-                        {{#up}}▲{{/up}}
-                        {{#down}}▼{{/down}}
-                        {{#equal}}●{{/equal}}
-                    {{/trend_label}}
-                </small>
+            <div class="kpi">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">{{label}}</span>
+                </div>
+
+                <div class="kpi-middle">
+                    <div class="kpi-value">{{value}}</div>
+                </div>
+
+                {{#show_trend}}
+                <div class="kpi-bottom">
+
+                    <span class="kpi-trend {{trend_class}}">
+                        {{#trend_label}}
+                            {{#up}}▲{{/up}}
+                            {{#down}}▼{{/down}}
+                            {{#equal}}●{{/equal}}
+                        {{/trend_label}}
+
+                        {{trend}}%
+                    </span>
+
+                </div>
+                {{/show_trend}}
+
             </div>
+
         </div>
         {{/kpis}}
 
     </div>
+
     <div class="dashboard-insights mt-4">
 
         {{#insights}}
-        <div class="insight-card insight-{{type}}">
+        <div class="insight-card {{type}}">
 
             <div class="insight-icon">
-                {{#is_danger}}🔴{{/is_danger}}
-                {{#is_warning}}🟡{{/is_warning}}
-                {{#is_info}}🔵{{/is_info}}
+                {{#is_danger}}<i class="fa fa-circle-exclamation"></i>{{/is_danger}}
+                {{#is_warning}}<i class="fa fa-triangle-exclamation"></i>{{/is_warning}}
+                {{#is_info}}<i class="fa fa-circle-info"></i>{{/is_info}}
             </div>
 
-            <div class="insight-content">
+            <div class="insight-body">
+
                 <div class="insight-title">
                     {{#is_danger}}Atención crítica{{/is_danger}}
-                    {{#is_warning}}Revisar{{/is_warning}}
+                    {{#is_warning}}Revisión recomendada{{/is_warning}}
                     {{#is_info}}Información{{/is_info}}
                 </div>
 
                 <div class="insight-message">
                     {{message}}
                 </div>
+
             </div>
 
         </div>
@@ -71,7 +98,7 @@
 
     </div>
     <!-- Gráfica -->
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-12">
             <div class="card custom-card mb-4">
 

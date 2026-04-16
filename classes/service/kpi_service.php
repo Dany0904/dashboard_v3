@@ -5,6 +5,58 @@ namespace local_dashboard_v3\service;
 defined('MOODLE_INTERNAL') || die();
 
 class kpi_service {
+    private static function format_insight($type, $message)
+    {
+        return [
+            'type' => $type,
+            'message' => $message,
+            'is_danger' => $type === 'danger',
+            'is_warning' => $type === 'warning',
+            'is_info' => $type === 'info'
+        ];
+    }
+
+     private static function calculate_trend($current, $previous) {
+
+        if ($previous <= 0) {
+            return [
+                'value' => 0,
+                'class' => 'text-muted',
+                'trend_label' => [
+                    'equal' => true
+                ]
+            ];
+        }
+
+        $change = (($current - $previous) / $previous) * 100;
+        $rounded = round($change, 1);
+
+        if ($rounded > 0) {
+            return [
+                'value' => '+' . $rounded,
+                'class' => 'text-success',
+                'trend_label' => [
+                    'up' => true
+                ]
+            ];
+        } elseif ($rounded < 0) {
+            return [
+                'value' => $rounded,
+                'class' => 'text-danger',
+                'trend_label' => [
+                    'down' => true
+                ]
+            ];
+        } else {
+            return [
+                'value' => '0',
+                'class' => 'text-muted',
+                'trend_label' => [
+                    'equal' => true
+                ]
+            ];
+        }
+    }
 
     public static function get_kpis_initial($days = 30) {
         global $DB;
@@ -165,65 +217,57 @@ class kpi_service {
             'start2' => $current_start
         ]);
 
-        // =========================
+       // =========================
         // INSIGHTS INTELIGENTES
         // =========================
         $insights = [];
 
-        // 1. Caída de usuarios
-        if ($active_users_trend['value'] <= -30) {
-            $insights[] = [
-                'type' => 'warning',
-                'message' => 'Caída significativa en usuarios activos'
-            ];
+        // usar datos reales del sistema
+        $trend_active = $active_users_trend['value'];
+
+        // 1. Caída fuerte de actividad
+        if ($trend_active <= -30) {
+            $insights[] = self::format_insight(
+                'danger',
+                "Los usuarios activos cayeron " . abs($trend_active) . "% vs periodo anterior"
+            );
         }
 
-        // 2. Pocos cursos activos
-        $active_ratio = $total_courses > 0
-            ? ($current_active_courses / $total_courses) * 100
+        // 2. Crecimiento fuerte
+        if ($trend_active >= 30) {
+            $insights[] = self::format_insight(
+                'info',
+                "Crecimiento positivo: usuarios activos +" . $trend_active . "%"
+            );
+        }
+
+        // 3. Alto porcentaje de inactivos
+        $inactive_ratio = $total_courses > 0
+            ? ($total_courses - $current_active_courses) / $total_courses * 100
             : 0;
 
-        if ($active_ratio < 50) {
-            $insights[] = [
-                'type' => 'warning',
-                'message' => 'Menos del 50% de cursos tienen actividad reciente'
-            ];
+        if ($inactive_ratio > 60) {
+            $insights[] = self::format_insight(
+                'warning',
+                round($inactive_ratio, 1) . "% de cursos están inactivos"
+            );
         }
 
-        // 3. Baja participación
+        // 4. Baja participación general
         if ($low_participation > 0) {
-            $insights[] = [
-                'type' => 'warning',
-                'message' => "$low_participation cursos con baja participación"
-            ];
+            $insights[] = self::format_insight(
+                'warning',
+                $low_participation . " cursos con baja participación"
+            );
         }
 
-        // 4. Sin finalizaciones
-        if ($completion_rate == 0) {
-            $insights[] = [
-                'type' => 'info',
-                'message' => 'No hay cursos finalizados en el periodo'
-            ];
-        }
-
-        // 5. Poco uso general
+        // 5. Sistema muy bajo uso
         if ($current_active_users < 5) {
-            $insights[] = [
-                'type' => 'warning',
-                'message' => 'Muy baja actividad en la plataforma'
-            ];
+            $insights[] = self::format_insight(
+                'danger',
+                'Muy baja actividad en la plataforma'
+            );
         }
-
-        usort($insights, function($a, $b) {
-
-            $priority = [
-                'danger' => 1,
-                'warning' => 2,
-                'info' => 3
-            ];
-
-            return ($priority[$a['type']] ?? 99) <=> ($priority[$b['type']] ?? 99);
-        });
 
         return [
             'kpis' => [
@@ -264,45 +308,4 @@ class kpi_service {
         ];
     }
 
-    private static function calculate_trend($current, $previous) {
-
-        if ($previous <= 0) {
-            return [
-                'value' => 0,
-                'class' => 'text-muted',
-                'trend_label' => [
-                    'equal' => true
-                ]
-            ];
-        }
-
-        $change = (($current - $previous) / $previous) * 100;
-        $rounded = round($change, 1);
-
-        if ($rounded > 0) {
-            return [
-                'value' => '+' . $rounded,
-                'class' => 'text-success',
-                'trend_label' => [
-                    'up' => true
-                ]
-            ];
-        } elseif ($rounded < 0) {
-            return [
-                'value' => $rounded,
-                'class' => 'text-danger',
-                'trend_label' => [
-                    'down' => true
-                ]
-            ];
-        } else {
-            return [
-                'value' => '0',
-                'class' => 'text-muted',
-                'trend_label' => [
-                    'equal' => true
-                ]
-            ];
-        }
-    }
 }

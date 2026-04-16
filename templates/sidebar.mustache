@@ -1,52 +1,53 @@
-<ul class="nav flex-column bg-white border-end vh-100 p-3" style="min-width: 250px;">
+<nav class="local-dashboard-sidebar p-3">
 
-    <!-- Título -->
-    <li class="mb-3">
-        <h5 class="fw-bold mb-0">Dashboard</h5>
-        <small class="text-muted">Moodle</small>
-    </li>
+    <!-- Header -->
+    <div class="sidebar-header mb-4">
+        <div class="fw-bold fs-5">Dashboard</div>
+        <div class="text-muted small">Moodle Analytics</div>
+    </div>
 
-    <!-- Inicio -->
-    <li class="nav-item">
-        <a class="nav-link {{#isindex}}active fw-bold{{/isindex}}" href="{{{indexurl}}}">
-            <i class="fa fa-home me-2"></i> Inicio
-        </a>
-    </li>
+    <!-- Navigation -->
+    <ul class="nav flex-column gap-1">
 
-    <hr>
+        <!-- Inicio -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link {{#isindex}}active{{/isindex}}" href="{{{indexurl}}}">
+                <i class="fa fa-home me-2"></i>
+                Inicio
+            </a>
+        </li>
 
-    <!-- USUARIOS -->
-    <li class="nav-item">
-        <a class="nav-link {{#isusuarios}}active fw-bold{{/isusuarios}}" href="{{{usuariosurl}}}">
-            <i class="fa fa-users me-2"></i> Usuarios
-        </a>
-    </li>
+        <!-- Usuarios -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link {{#isusuarios}}active{{/isusuarios}}" href="{{{usuariosurl}}}">
+                <i class="fa fa-users me-2"></i>
+                Usuarios
+            </a>
+        </li>
 
-    <hr>
+        <!-- Cursos -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link {{#iscursos}}active{{/iscursos}}" href="{{{cursosurl}}}">
+                <i class="fa fa-book me-2"></i>
+                Cursos
+            </a>
+        </li>
 
-    <!-- CURSOS -->
-    <li class="nav-item">
-        <a class="nav-link {{#iscursos}}active fw-bold{{/iscursos}}" href="{{{cursosurl}}}">
-            <i class="fa fa-book me-2"></i> Cursos
-        </a>
-    </li>
+        <!-- Docentes -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link {{#isdocentes}}active{{/isdocentes}}" href="{{{docentesurl}}}">
+                <i class="fa fa-chalkboard-user me-2"></i>
+                Docentes
+            </a>
+        </li>
 
-    <hr>
+        <!-- Sistema -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link {{#issistema}}active{{/issistema}}" href="{{{sistemasurl}}}">
+                <i class="fa fa-microchip me-2"></i>
+                Sistema
+            </a>
+        </li>
 
-    <!-- DOCENTES -->
-    <li class="nav-item">
-        <a class="nav-link {{#isdocentes}}active fw-bold{{/isdocentes}}" href="{{{docentesurl}}}">
-            <i class="fa fa-chalkboard-user me-2"></i> Docentes
-        </a>
-    </li>
-
-     <hr>
-
-    <!-- SISTEMA -->
-    <li class="nav-item">
-        <a class="nav-link {{#issistema}}active fw-bold{{/issistema}}" href="{{{sistemasurl}}}">
-            <i class="fa fa-microchip me-2"></i> Sistema
-        </a>
-    </li>
-
-</ul>
+    </ul>
+</nav>

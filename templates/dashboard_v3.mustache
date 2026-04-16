@@ -1,41 +1,56 @@
 <div class="container-fluid local-dashboard-v3">
 
-    <h3 class="mb-4">Dashboard</h3>
+    <div class="dashboard-header mb-4">
+        <h2 class="dashboard-title mb-0">Dashboard</h2>
+    </div>
 
-    <div class="d-flex justify-content-end mb-3">
+    <div class="dashboard-filters d-flex justify-content-end flex-wrap gap-2 mb-3">
 
-        <select id="filter-days" class="form-select w-auto">
-            <option value="7" {{#is7}}selected{{/is7}}>Últimos 7 días</option>
-            <option value="30" {{#is30}}selected{{/is30}}>Últimos 30 días</option>
-            <option value="90" {{#is90}}selected{{/is90}}>Últimos 90 días</option>
-        </select>
+        <!-- Filtro días -->
+        <div class="filter-control">
+            <select id="filter-days" class="form-select form-select-sm">
+                <option value="7" {{#is7}}selected{{/is7}}>Últimos 7 días</option>
+                <option value="30" {{#is30}}selected{{/is30}}>Últimos 30 días</option>
+                <option value="90" {{#is90}}selected{{/is90}}>Últimos 90 días</option>
+            </select>
+        </div>
 
     </div>
 
     <!--  Cards -->
-    <div class="row g-3 mb-4">
+   <div class="row g-3 mb-4">
 
         {{#kpis}}
         <div class="col-xl-3 col-md-6">
-            <div class="dashboard-card">
-                <div class="card-content">
-                    <span class="card-title">{{label}}</span>
-                    <h2>{{value}}</h2>
 
-                    {{#show_trend}}
-                        <small class="{{trend_class}}">
-                            {{trend}}%
+            <div class="kpi">
 
-                            {{#trend_label}}
-                                {{#up}} ▲{{/up}}
-                                {{#down}} ▼{{/down}}
-                                {{#equal}} ●{{/equal}}
-                            {{/trend_label}}
-                        </small>
-                    {{/show_trend}}
-                    
+                <div class="kpi-top">
+                    <span class="kpi-label">{{label}}</span>
                 </div>
+
+                <div class="kpi-middle">
+                    <div class="kpi-value">{{value}}</div>
+                </div>
+
+                {{#show_trend}}
+                <div class="kpi-bottom">
+
+                    <span class="kpi-trend {{trend_class}}">
+                        {{#trend_label}}
+                            {{#up}}▲{{/up}}
+                            {{#down}}▼{{/down}}
+                            {{#equal}}●{{/equal}}
+                        {{/trend_label}}
+
+                        {{trend}}%
+                    </span>
+
+                </div>
+                {{/show_trend}}
+
             </div>
+
         </div>
         {{/kpis}}
 
@@ -44,28 +59,26 @@
     <div class="dashboard-insights mt-4">
 
         {{#insights}}
-        <div class="insight-card insight-{{type}}">
+        <div class="insight-card {{type}}">
 
             <div class="insight-icon">
-                {{#type}}
-                    {{#danger}}🔴{{/danger}}
-                    {{#warning}}🟡{{/warning}}
-                    {{#info}}🔵{{/info}}
-                {{/type}}
+                {{#is_danger}}<i class="fa fa-circle-exclamation"></i>{{/is_danger}}
+                {{#is_warning}}<i class="fa fa-triangle-exclamation"></i>{{/is_warning}}
+                {{#is_info}}<i class="fa fa-circle-info"></i>{{/is_info}}
             </div>
 
-            <div class="insight-content">
+            <div class="insight-body">
+
                 <div class="insight-title">
-                    {{#type}}
-                        {{#danger}}Atención crítica{{/danger}}
-                        {{#warning}}Revisar{{/warning}}
-                        {{#info}}Información{{/info}}
-                    {{/type}}
+                    {{#is_danger}}Atención crítica{{/is_danger}}
+                    {{#is_warning}}Revisión recomendada{{/is_warning}}
+                    {{#is_info}}Información{{/is_info}}
                 </div>
 
                 <div class="insight-message">
                     {{message}}
                 </div>
+
             </div>
 
         </div>
@@ -74,7 +87,7 @@
     </div>
 
     <!--  Gráficas -->
-    <div class="row g-4">
+    <div class="row mt-4">
 
         <div class="col-lg-6 col-12">
             <div class="card custom-card mb-4">
@@ -128,34 +141,31 @@
             </div>
         </div>
 
-        <div class="col-lg-6">
-            <div class="dashboard-panel">
-                <div class="panel-header d-flex justify-content-between align-items-center">
-                    <h5>Cursos Demandados</h5>
-                    <a href="./detalle_cursos_demandados.php" class="btn btn-sm btn-outline-primary">
-                        Ver detalle
-                    </a>
+         <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Cursos Demandados
+                    </h6>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div id="inscritosChart"></div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-6">
-            <div class="dashboard-panel">
-                <div class="panel-header d-flex justify-content-between align-items-center">
-                    <h5>Mejores Promedios</h5>
-                    <a href="./detalle_cursos_promedio.php" class="btn btn-sm btn-outline-primary">
-                        Ver detalle
-                    </a>
+        <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Mejores Promedios
+                    </h6>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div id="promedioChart"></div>
                 </div>
             </div>
         </div>
-
     </div>
 
 </div>

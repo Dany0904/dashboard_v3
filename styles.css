@@ -1,276 +1,357 @@
-.local-dashboard-v3 {
-    padding: 1rem;
-}
-
-/* Cards */
-.dashboard-card {
-    background: var(--card-bg, #fff);
-    border-radius: 16px;
-    padding: 1.2rem;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-    transition: 0.2s ease;
-    height: 100%;
-}
-
-.dashboard-card:hover {
-    transform: translateY(-4px);
-}
-
-.card-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-title {
-    font-size: 0.85rem;
-    color: var(--text-muted, #6c757d);
-}
-
-.dashboard-card h2 {
-    margin: 0;
-    font-weight: 700;
-}
-
-/* Iconos */
-.card-icon {
-    width: 45px;
-    height: 45px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 18px;
-}
-
-/* Panels */
-.dashboard-panel {
-    background: var(--card-bg, #fff);
-    border-radius: 16px;
-    padding: 1rem;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-    height: 100%;
-}
-
-.panel-header h5 {
-    margin: 0;
-    font-weight: 600;
-}
-
-.panel-body {
-    min-height: 320px;
-}
-
-/* Botones */
-.dashboard-panel .btn {
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 8px;
-}
-
-/* Sidebar estilo Moodle */
-.local-dashboard-sidebar .nav-link {
-    color: #495057;
-    border-radius: 6px;
-}
-
-.local-dashboard-sidebar .nav-link:hover {
-    background-color: #f8f9fa;
-}
-
-.local-dashboard-sidebar .nav-link.active {
-    background-color: #e9ecef;
-    color: #000;
-}
-
-.local-dashboard-sidebar hr {
-    margin: 0.75rem 0;
-}
-
-/* Sidebar ancho */
 .local-dashboard-sidebar {
-    min-width: 250px;
+    width: 260px;
+    min-height: 100vh;
+    background: var(--bs-body-bg, #fff);
+    border-right: 1px solid rgba(0,0,0,0.08);
 }
 
-/* Mobile spacing */
+/* Header */
+.sidebar-header {
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: var(--bs-body-color, #333);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+/* Icono con mejor proporción visual */
+.sidebar-link i {
+    width: 20px;
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.85;
+    flex-shrink: 0;
+}
+
+/* Hover */
+.sidebar-link:hover {
+    background: rgba(13, 110, 253, 0.08);
+    color: #0d6efd;
+    transform: translateX(2px);
+}
+
+/* Active state tipo "pill corporativa" */
+.sidebar-link.active {
+    background: linear-gradient(90deg, rgba(13,110,253,0.15), rgba(13,110,253,0.05));
+    color: #0d6efd;
+    font-weight: 600;
+    position: relative;
+}
+
+/* Barra lateral activa */
+.sidebar-link.active::before {
+    content: "";
+    position: absolute;
+    left: -12px;
+    top: 8px;
+    bottom: 8px;
+    width: 4px;
+    border-radius: 4px;
+    background: #0d6efd;
+}
+
+/* Iconos alineados */
+.sidebar-link i {
+    width: 20px;
+    text-align: center;
+    opacity: 0.85;
+}
+
+/* Responsive (opcional para Moodle) */
 @media (max-width: 768px) {
     .local-dashboard-sidebar {
         width: 100%;
+        min-height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(0,0,0,0.08);
     }
 }
 
-/* Animación flecha */
-.transition-icon {
-    transition: transform 0.2s ease;
+.dashboard-filters {
+    align-items: center;
 }
 
-.transition-icon.rotate {
-    transform: rotate(180deg);
-}
-
-.rotate {
-    transform: rotate(180deg);
-    transition: transform 0.2s ease;
-}
-
-/* =========================
-   BASE PARA TODAS LAS TABLAS DEL DASHBOARD
-========================= */
-
-.local-dashboard-table {
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--bs-body-bg);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    border: 1px solid rgba(0,0,0,0.05);
-}
-
-/* HEADER */
-.local-dashboard-table thead th {
-    background: #f8fafc;
-    color: #334155;
-    font-weight: 600;
-    border: none;
-    padding: 14px;
-    font-size: 14px;
-}
-
-/* FILAS */
-.local-dashboard-table tbody tr {
-    border-bottom: 1px solid #eef2f7;
-    transition: all 0.15s ease;
-}
-
-.local-dashboard-table tbody tr:hover {
-    background-color: #f1f5f9;
-}
-
-/* CELDAS */
-.local-dashboard-table td {
-    padding: 14px;
-    color: #475569;
-    font-size: 14px;
-}
-
-/* PRIMER COLUMNA */
-.local-dashboard-table td:first-child {
-    font-weight: 600;
-}
-
-/* ÚLTIMA COLUMNA (VALORES) */
-.local-dashboard-table td:last-child {
-    font-weight: 600;
-    color: #0f172a;
-}
-
-/* =========================
-   PAGINACIÓN MOODLE
-========================= */
-
-.paging {
-    margin-top: 12px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 6px;
-    font-size: 13px;
-}
-
-.paging a,
-.paging span {
-    padding: 6px 10px;
-    border-radius: 6px;
-    background: #f1f5f9;
-    color: #334155;
-    text-decoration: none;
-}
-
-.paging a:hover {
-    background: #e2e8f0;
-}
-
-.paging .current {
-    background: #2563eb;
-    color: #fff;
-}
-
-/* Tabla detalle expandible */
-.detalle-row td {
-    border-top: none !important;
-    background: transparent !important;
-}
-
-.detalle-row .table {
-    background: #fff;
+/* Cada filtro como "chip panel" */
+.filter-control {
+    background: var(--bs-body-bg, #fff);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: 10px;
-    overflow: hidden;
-    margin-top: 10px;
+    padding: 4px;
+    transition: all 0.2s ease;
 }
 
-.detalle-row .table th {
-    background: #f1f3f5;
+/* Select más limpio dentro */
+.filter-control .form-select {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    padding-right: 28px;
+    min-width: 180px;
+}
+
+/* Hover tipo dashboard */
+.filter-control:hover {
+    border-color: rgba(13, 110, 253, 0.35);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Focus accesible */
+.filter-control:focus-within {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dashboard-title {
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--bs-body-color, #222);
+}
+
+.dashboard-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.kpi {
+    background: var(--bs-body-bg, #fff);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 14px;
+    padding: 16px 18px;
+    transition: all 0.2s ease;
+    height: 100%;
+}
+
+/* Hover más sutil y elegante */
+.kpi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+    border-color: rgba(13,110,253,0.15);
+}
+
+/* Label */
+.kpi-label {
     font-size: 0.85rem;
-    text-transform: uppercase;
+    color: #6c757d;
+    font-weight: 500;
 }
 
-.detalle-row .table td {
+/* Valor grande y limpio */
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    margin-top: 6px;
+}
+
+/* Trend base */
+.kpi-trend {
     font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
 }
 
-/*estilos 2.0*/
+/* =========================
+   COLORES DEL TREND
+   ========================= */
 
+/* Positivo */
+.kpi-trend.up {
+    color: #198754;
+}
+
+/* Negativo */
+.kpi-trend.down {
+    color: #dc3545;
+}
+
+/* Neutro */
+.kpi-trend.equal {
+    color: #6c757d;
+}
+
+.dashboard-insights {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Card base */
 .insight-card {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    padding: 12px 16px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    background: #f8f9fa;
-    border-left: 4px solid;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--bs-body-bg, #fff);
+    transition: all 0.2s ease;
 }
 
+/* Hover sutil */
+.insight-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+/* ICONO */
 .insight-icon {
-    font-size: 20px;
+    font-size: 18px;
     margin-top: 2px;
+    opacity: 0.9;
+}
+
+/* CONTENIDO */
+.insight-body {
+    flex: 1;
 }
 
 .insight-title {
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+    letter-spacing: -0.2px;
 }
 
 .insight-message {
-    font-size: 13px;
-    color: #555;
+    font-size: 0.9rem;
+    color: #6c757d;
+    line-height: 1.4;
 }
 
-/* Colores por tipo */
-.insight-danger {
-    border-color: #dc3545;
-    background: #fff5f5;
+/* =========================
+   VARIANTES
+   ========================= */
+
+/* DANGER */
+.insight-card.danger {
+    border-left: 4px solid #dc3545;
+    background: rgba(220, 53, 69, 0.04);
 }
 
-.insight-warning {
-    border-color: #ffc107;
-    background: #fff9e6;
+.insight-card.danger .insight-icon {
+    color: #dc3545;
 }
 
-.insight-info {
-    border-color: #0d6efd;
-    background: #eef5ff;
+.insight-card.danger .insight-title {
+    color: #b02a37;
 }
 
-.trend-up {
-    color: #1cc88a;
-    font-weight: 600;
+/* WARNING */
+.insight-card.warning {
+    border-left: 4px solid #ffc107;
+    background: rgba(255, 193, 7, 0.06);
 }
 
-.trend-down {
-    color: #e74a3b;
-    font-weight: 600;
+.insight-card.warning .insight-icon {
+    color: #b38600;
 }
 
-.trend-neutral {
-    color: #858796;
+.insight-card.warning .insight-title {
+    color: #8a6d00;
+}
+
+/* INFO */
+.insight-card.info {
+    border-left: 4px solid #0d6efd;
+    background: rgba(13, 110, 253, 0.04);
+}
+
+.insight-card.info .insight-icon {
+    color: #0d6efd;
+}
+
+.insight-card.info .insight-title {
+    color: #0b5ed7;
+}
+
+/* =========================
+   CARD BASE MODERNA
+   ========================= */
+
+.custom-card {
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 14px;
+    background: var(--bs-body-bg, #fff);
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+/* Hover tipo dashboard SaaS */
+.custom-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+    border-color: rgba(13,110,253,0.15);
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.custom-card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 14px 16px;
+}
+
+.custom-card-header h6 {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin: 0;
+    color: var(--bs-body-color, #222);
+    letter-spacing: -0.2px;
+}
+
+/* =========================
+   BODY
+   ========================= */
+
+.card-body {
+    padding: 16px;
+}
+
+/* Contenedor gráfico */
+.card-body > div {
+    width: 100%;
+    min-height: 280px;
+}
+
+/* =========================
+   MEJORA VISUAL GENERAL
+   ========================= */
+
+/* Grid spacing más limpio (opcional mejora visual) */
+.row.g-4 {
+    margin-top: 4px;
+}
+
+/* =========================
+   RESPONSIVE TOUCH
+   ========================= */
+
+@media (max-width: 768px) {
+    .custom-card {
+        border-radius: 12px;
+    }
+
+    .card-body > div {
+        min-height: 240px;
+    }
 }
