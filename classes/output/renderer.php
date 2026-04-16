@@ -13,11 +13,13 @@ class renderer extends plugin_renderer_base {
             'indexurl' => (new moodle_url('/local/dashboard_v3/index.php'))->out(),
             'usuariosurl' => (new moodle_url('/local/dashboard_v3/detalle_usuarios.php'))->out(),
             'cursosurl' => (new moodle_url('/local/dashboard_v3/detalle_cursos.php'))->out(),
+            'docentesurl' => (new moodle_url('/local/dashboard_v3/detalle_docentes.php'))->out(),
 
             // Activos
             'isindex' => $currentpage === 'index',
             'isusuarios' => $currentpage === 'usuarios',
             'iscursos' => $currentpage === 'cursos',
+            'isdocentes' => $currentpage === 'docentes',
     
         ];
 
