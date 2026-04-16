@@ -52,4 +52,44 @@ class renderer extends plugin_renderer_base {
 
         return \html_writer::table($table);
     }
+
+    public function render_course_ranking_table($courses)
+    {
+        $table = new \html_table();
+
+        $table->head = [
+            'Curso',
+            'Usuarios activos',
+            'Eventos',
+            '% Finalización',
+            'Promedio avance',
+            'Tendencia'
+        ];
+
+        $table->attributes['class'] = 'generaltable table table-striped';
+
+        foreach ($courses as $c) {
+
+            $trend_label = $c['trend'] > 0 ? '▲' : ($c['trend'] < 0 ? '▼' : '●');
+
+            $trend_class = $c['trend'] > 0
+                ? 'text-success'
+                : ($c['trend'] < 0 ? 'text-danger' : 'text-muted');
+
+            $row = new \html_table_row();
+
+            $row->cells = [
+                $c['fullname'],
+                $c['activeusers'],
+                $c['events'],
+                $c['completion'] . '%',
+                $c['avg_progress'],
+                "<span class='{$trend_class}'>{$c['trend']}% {$trend_label}</span>"
+            ];
+
+            $table->data[] = $row;
+        }
+
+        return \html_writer::table($table);
+    }
 }

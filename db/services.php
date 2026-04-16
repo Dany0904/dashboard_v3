@@ -55,5 +55,23 @@ $functions = [
         'description' => 'Actividad de cursos (línea)',
         'type' => 'read',
         'ajax' => true,
+    ],
+
+    'local_dashboard_v3_get_course_activity_weekday' => [
+        'classname' => 'local_dashboard_v3\external\get_course_activity_weekday',
+        'methodname' => 'execute',
+        'classpath' => '',
+        'description' => 'Actividad por día de la semana',
+        'type' => 'read',
+        'ajax' => true,
+    ],
+
+    'local_dashboard_v3_get_course_top_modules' => [
+        'classname' => 'local_dashboard_v3\external\get_course_top_modules',
+        'methodname' => 'execute',
+        'classpath' => '',
+        'description' => 'Top módulos del curso',
+        'type' => 'read',
+        'ajax' => true,
     ]
 ];

@@ -43,9 +43,36 @@
         {{/kpis}}
 
     </div>
+    <div class="dashboard-insights mt-4">
+
+        {{#insights}}
+        <div class="insight-card insight-{{type}}">
+
+            <div class="insight-icon">
+                {{#is_danger}}🔴{{/is_danger}}
+                {{#is_warning}}🟡{{/is_warning}}
+                {{#is_info}}🔵{{/is_info}}
+            </div>
+
+            <div class="insight-content">
+                <div class="insight-title">
+                    {{#is_danger}}Atención crítica{{/is_danger}}
+                    {{#is_warning}}Revisar{{/is_warning}}
+                    {{#is_info}}Información{{/is_info}}
+                </div>
+
+                <div class="insight-message">
+                    {{message}}
+                </div>
+            </div>
+
+        </div>
+        {{/insights}}
+
+    </div>
     <!-- Gráfica -->
     <div class="row">
-        <div class="col-lg-6  col-12">
+        <div class="col-12">
             <div class="card custom-card mb-4">
 
                 <div class="card-header custom-card-header">
@@ -62,6 +89,66 @@
                 </div>
 
             </div>
-        </div>  
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Actividad por día de la semana
+                    </h6>
+                    <small class="text-muted">
+                        Distribución de actividad en los últimos {{days}} días
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <div id="weekdayChart"></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Top módulos del curso
+                    </h6>
+                    <small class="text-muted">
+                        Recursos más utilizados en los últimos {{days}} días
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <div id="topModulesChart"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Ranking de cursos
+                    </h6>
+                    <small class="text-muted">
+                        Actividad y rendimiento de los cursos en los últimos {{days}} días
+                    </small>
+                </div>
+
+                <div class="card-body">
+
+                    {{{table_courses}}}
+
+                </div>
+
+            </div>
+
+        </div>
     </div>
 </div>
