@@ -64,4 +64,87 @@
 
     </div>
 
+     <!-- Gráfica -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Actividad docente en el tiempo
+                    </h6>
+                    <small class="text-muted">
+                        Interacciones de docentes en los últimos {{days}} días
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <div id="teacherActivityChart"></div>
+                </div>
+
+            </div>
+        </div>
+         <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Docentes activos por día
+                    </h6>
+                    <small class="text-muted">
+                        Participación diaria de docentes en el periodo
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <div id="teacherActiveDailyChart"></div>
+                </div>
+
+            </div>
+        </div>
+          <div class="col-lg-6 col-12">
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Intervención por curso
+                    </h6>
+                    <small class="text-muted">
+                        Cursos con más actividad docente (Top)
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <div id="teacherCourseInterventionChart"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Ranking de docentes
+                    </h6>
+                    <small class="text-muted">
+                        Actividad y desempeño docente en los últimos {{days}} días
+                    </small>
+                </div>
+
+                <div class="card-body">
+
+                    {{{table_teachers}}}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
 </div>

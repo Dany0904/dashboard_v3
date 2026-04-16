@@ -73,5 +73,33 @@ $functions = [
         'description' => 'Top módulos del curso',
         'type' => 'read',
         'ajax' => true,
+    ],
+
+    'local_dashboard_v3_get_teacher_activity_chart' => [
+        'classname'   => 'local_dashboard_v3\external\get_teacher_activity_chart',
+        'methodname'   => 'execute',
+        'classpath'    => '',
+        'description'  => 'Teacher activity over time',
+        'type'         => 'read',
+        'ajax'         => true,
+        'capabilities' => 'local/dashboard_v3:view'
+    ],
+
+    'local_dashboard_v3_get_teacher_active_daily' => [
+        'classname' => 'local_dashboard_v3\external\get_teacher_active_daily',
+        'methodname' => 'execute',
+        'classpath' => '',
+        'description' => 'Docentes activos por día',
+        'type' => 'read',
+        'ajax' => true
+    ],
+
+    'local_dashboard_v3_get_teacher_course_intervention' => [
+        'classname'   => 'local_dashboard_v3\\external\\get_teacher_course_intervention',
+        'methodname'  => 'execute',
+        'classpath'   => '',
+        'description' => 'Intervención docente por curso (Top N)',
+        'type'        => 'read',
+        'ajax'        => true
     ]
 ];

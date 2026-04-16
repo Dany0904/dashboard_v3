@@ -94,4 +94,44 @@ class renderer extends plugin_renderer_base {
 
         return \html_writer::table($table);
     }
+
+    public function render_teacher_ranking_table($teachers)
+    {
+        $table = new \html_table();
+
+        $table->head = [
+            'Docente',
+            'Actividades',
+            'Cursos intervenidos',
+            'Última actividad',
+            'Promedio diario',
+            'Tendencia'
+        ];
+
+        $table->attributes['class'] = 'generaltable table table-striped';
+
+        foreach ($teachers as $t) {
+
+            $trend_label = $t['trend'] > 0 ? '▲' : ($t['trend'] < 0 ? '▼' : '●');
+
+            $trend_class = $t['trend'] > 0
+                ? 'text-success'
+                : ($t['trend'] < 0 ? 'text-danger' : 'text-muted');
+
+            $row = new \html_table_row();
+
+            $row->cells = [
+                $t['fullname'],
+                $t['events'],
+                $t['courses'],
+                $t['lastactivity'],
+                $t['avg_daily'],
+                "<span class='{$trend_class}'>{$t['trend']}% {$trend_label}</span>"
+            ];
+
+            $table->data[] = $row;
+        }
+
+        return \html_writer::table($table);
+    }
 }
