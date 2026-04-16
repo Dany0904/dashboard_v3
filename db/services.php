@@ -101,5 +101,15 @@ $functions = [
         'description' => 'Intervención docente por curso (Top N)',
         'type'        => 'read',
         'ajax'        => true
+    ],
+
+    'local_dashboard_v3_get_system_performance_chart' => [
+        'classname'   => 'local_dashboard_v3\\external\\get_system_performance_chart',
+        'methodname'  => 'execute',
+        'classpath'   => '',
+        'description' => 'System performance chart (response time, requests, errors)',
+        'type'        => 'read',
+        'ajax'        => true,
+        'capabilities'=> ''
     ]
 ];

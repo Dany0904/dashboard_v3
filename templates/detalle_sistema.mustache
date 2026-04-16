@@ -1,0 +1,89 @@
+<div class="container-fluid local-dashboard-v3">
+
+    <h3 class="mb-4">Sistema</h3>
+
+    <div class="d-flex justify-content-end mb-3">
+
+        <select id="filter-days" class="form-select w-auto">
+            <option value="7" {{#is7}}selected{{/is7}}>Últimos 7 días</option>
+            <option value="30" {{#is30}}selected{{/is30}}>Últimos 30 días</option>
+            <option value="90" {{#is90}}selected{{/is90}}>Últimos 90 días</option>
+        </select>
+
+    </div> 
+
+    <!-- KPIs -->
+    <div class="row g-3">
+
+        {{#kpis}}
+        <div class="col-xl-3 col-md-6">
+            <div class="dashboard-card">
+                <span>{{label}}</span>
+                <h2>{{value}}</h2>
+
+                <small class="{{trend_class}}">
+                    {{trend}}%
+                    {{#trend_label}}
+                        {{#up}}▲{{/up}}
+                        {{#down}}▼{{/down}}
+                        {{#equal}}●{{/equal}}
+                    {{/trend_label}}
+                </small>
+            </div>
+        </div>
+        {{/kpis}}
+
+    </div>
+
+    <!-- INSIGHTS -->
+    <div class="dashboard-insights mt-4">
+
+        {{#insights}}
+        <div class="insight-card insight-{{type}}">
+
+            <div class="insight-icon">
+                {{#is_danger}}🔴{{/is_danger}}
+                {{#is_warning}}🟡{{/is_warning}}
+                {{#is_info}}🔵{{/is_info}}
+            </div>
+
+            <div class="insight-content">
+                <div class="insight-title">
+                    {{#is_danger}}Atención crítica{{/is_danger}}
+                    {{#is_warning}}Revisar{{/is_warning}}
+                    {{#is_info}}Información{{/is_info}}
+                </div>
+
+                <div class="insight-message">
+                    {{message}}
+                </div>
+            </div>
+
+        </div>
+        {{/insights}}
+
+    </div>
+
+   <!-- Gráfica -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card custom-card mb-4">
+
+                <div class="card-header custom-card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Rendimiento del sistema
+                    </h6>
+                    <small class="text-muted">
+                        Actividad del sistema en el tiempo en los últimos {{days}} días
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <div id="systemPerformanceChart"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
