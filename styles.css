@@ -328,10 +328,10 @@
 }
 
 /* Contenedor gráfico */
-.card-body > div {
+/* .card-body > div {
     width: 100%;
     min-height: 280px;
-}
+} */
 
 /* =========================
    MEJORA VISUAL GENERAL
@@ -351,7 +351,7 @@
         border-radius: 12px;
     }
 
-    .card-body > div {
+ /*    .card-body > div {
         min-height: 240px;
-    }
+    } */
 }
